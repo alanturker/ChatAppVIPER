@@ -12,15 +12,13 @@ final class AppManager: NSObject {
     
     static let shared: AppManager = AppManager()
     
-    
-    
     func openConversations(with vc: UIViewController) {
         
         let conversationsVC = ConversationRouter.createModule()
         let nav = UINavigationController(rootViewController: conversationsVC)
         nav.modalPresentationStyle = .fullScreen
         
-        vc.present(nav, animated: true, completion: nil)
+        vc.present(nav, animated: false, completion: nil)
     }
     
     func openLogIn(with vc: UIViewController) {
@@ -29,7 +27,15 @@ final class AppManager: NSObject {
         let nav = UINavigationController(rootViewController: logInVC)
         nav.modalPresentationStyle = .fullScreen
         
-        vc.present(nav, animated: true, completion: nil)
+        vc.present(nav, animated: false, completion: nil)
+    }
+    
+    func openRegister(with vc: UIViewController) {
         
+        let registerVC = RegisterRouter.createModule()
+        let nav = UINavigationController(rootViewController: registerVC)
+        nav.modalPresentationStyle = .fullScreen
+        
+        vc.present(nav, animated: true, completion: nil)
     }
 }

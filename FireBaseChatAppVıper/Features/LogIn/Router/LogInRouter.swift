@@ -5,7 +5,7 @@
 //  Created by admin on 14.03.2022.
 //
 
-import Foundation
+import UIKit
 
 class LogInRouter: LogInPresenterToRouterConformable {
     
@@ -18,6 +18,10 @@ class LogInRouter: LogInPresenterToRouterConformable {
     
     var viewController: LogInViewController?
     
+    func openRegister(with vc: UIViewController) {
+        AppManager.shared.openRegister(with: vc)
+    }
+    
 }
 
 // MARK: Module Creation
@@ -28,7 +32,7 @@ extension LogInRouter {
             let router = LogInRouter.shared
             let interactor = LogInInteractor()
             let presenter = LogInPresenter(interactor: interactor, router: router)
-            let view = LogInViewController()
+            let view = LogInViewController.initializeFromStoryboard()
             
             presenter.view = view
             view.presenter = presenter

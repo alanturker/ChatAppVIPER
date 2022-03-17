@@ -8,13 +8,19 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
+    
+    var presenter: RegisterViewToPresenterConformable!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .blue
     }
     
 
 
 }
+// MARK: - Presenter To View Conformable
+extension RegisterViewController: RegisterPresenterToViewConformable {}
+// MARK: - Presenter To View Conformable
+extension RegisterViewController: Storyboardable {}

@@ -5,7 +5,7 @@
 //  Created by admin on 13.03.2022.
 //
 
-import Foundation
+import UIKit
 
 protocol ConversationViewToPresenterConformable: AnyObject {
     var view: ConversationPresenterToViewConformable? { get set }
@@ -14,6 +14,7 @@ protocol ConversationViewToPresenterConformable: AnyObject {
     
     func initialize()
     func goBack()
+    func openLogInPage(with vc: UIViewController)
 
 }
 
@@ -33,5 +34,5 @@ protocol ConversationInteractorToPresenterConformable: AnyObject {
 }
 
 protocol ConversationPresenterToRouterConformable: AnyObject {
-   
+    func openLogIn(with vc: UIViewController)
 }

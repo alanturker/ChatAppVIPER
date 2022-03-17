@@ -5,7 +5,7 @@
 //  Created by admin on 14.03.2022.
 //
 
-import Foundation
+import UIKit
 
 protocol LogInViewToPresenterConformable: AnyObject {
     var view: LogInPresenterToViewConformable? { get set }
@@ -14,6 +14,7 @@ protocol LogInViewToPresenterConformable: AnyObject {
     
     func initialize()
     func goBack()
+    func openRegisterPage(with vc: UIViewController)
 
 }
 
@@ -33,5 +34,5 @@ protocol LogInInteractorToPresenterConformable: AnyObject {
 }
 
 protocol LogInPresenterToRouterConformable: AnyObject {
-   
+    func openRegister(with vc: UIViewController)
 }

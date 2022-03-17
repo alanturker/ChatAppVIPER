@@ -5,7 +5,7 @@
 //  Created by admin on 14.03.2022.
 //
 
-import Foundation
+import UIKit
 
 class LogInPresenter: LogInViewToPresenterConformable {
     var view: LogInPresenterToViewConformable?
@@ -23,6 +23,10 @@ class LogInPresenter: LogInViewToPresenterConformable {
     
     func goBack() {
       
+    }
+    
+    func openRegisterPage(with vc: UIViewController) {
+        router.openRegister(with: vc)
     }
 }
 

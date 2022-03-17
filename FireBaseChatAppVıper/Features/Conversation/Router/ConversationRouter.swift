@@ -5,7 +5,7 @@
 //  Created by admin on 13.03.2022.
 //
 
-import Foundation
+import UIKit
 
 class ConversationRouter: ConversationPresenterToRouterConformable {
     
@@ -18,6 +18,10 @@ class ConversationRouter: ConversationPresenterToRouterConformable {
     
     var viewController: ConversationsViewController?
     
+    func openLogIn(with vc: UIViewController) {
+        AppManager.shared.openLogIn(with: vc)
+    }
+    
 }
 
 // MARK: Module Creation
@@ -28,7 +32,7 @@ extension ConversationRouter {
             let router = ConversationRouter.shared
             let interactor = ConversationsInteractor()
             let presenter = ConversationPresenter(interactor: interactor, router: router)
-            let view = ConversationsViewController()
+            let view = ConversationsViewController.initializeFromStoryboard()
             
             presenter.view = view
             view.presenter = presenter

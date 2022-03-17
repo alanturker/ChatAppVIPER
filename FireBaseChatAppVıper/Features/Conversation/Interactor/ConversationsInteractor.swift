@@ -5,7 +5,7 @@
 //  Created by admin on 13.03.2022.
 //
 
-import Foundation
+import UIKit
 
 class ConversationsInteractor: ConversationPresenterToInteractorConformable {
     var presenter: ConversationInteractorToPresenterConformable?

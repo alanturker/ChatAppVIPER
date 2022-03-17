@@ -13,6 +13,7 @@ class ConversationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         view.backgroundColor = .green
     }
@@ -24,14 +25,13 @@ class ConversationsViewController: UIViewController {
         
         if !isLoggedIn {
             
-            AppManager.shared.openLogIn(with: self)
-            
+            presenter.openLogInPage(with: self)
         }
     }
 
 }
 
 // MARK: - Presenter To View Conformable
-extension ConversationsViewController: ConversationPresenterToViewConformable {
-    
-}
+extension ConversationsViewController: ConversationPresenterToViewConformable {}
+// MARK: - Presenter To View Conformable
+extension ConversationsViewController: Storyboardable {}
