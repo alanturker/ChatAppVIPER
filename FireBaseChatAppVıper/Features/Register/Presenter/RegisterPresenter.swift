@@ -22,7 +22,7 @@ class RegisterPresenter: RegisterViewToPresenterConformable {
     }
     
     func goBack() {
-      
+        router.goBack()
     }
 }
 

@@ -13,7 +13,7 @@ class ConversationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = "Chat App"
 
         view.backgroundColor = .green
     }
@@ -22,9 +22,9 @@ class ConversationsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let isLoggedIn = UserDefaults.standard.bool(forKey: "LoggedIn")
-        
+
         if !isLoggedIn {
-            
+
             presenter.openLogInPage(with: self)
         }
     }

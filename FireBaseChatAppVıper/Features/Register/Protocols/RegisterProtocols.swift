@@ -33,5 +33,5 @@ protocol RegisterInteractorToPresenterConformable: AnyObject {
 }
 
 protocol RegisterPresenterToRouterConformable: AnyObject {
-   
+    func goBack()
 }

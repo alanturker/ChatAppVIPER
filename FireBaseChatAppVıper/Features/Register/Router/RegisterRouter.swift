@@ -17,6 +17,10 @@ class RegisterRouter: RegisterPresenterToRouterConformable {
     }
     
     var viewController: RegisterViewController?
+    
+    func goBack() {
+        viewController?.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension RegisterRouter {

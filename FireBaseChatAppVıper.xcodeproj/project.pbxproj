@@ -33,9 +33,13 @@
 		8414127D27E0BA7400F7036B /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414127C27E0BA7400F7036B /* RegisterPresenter.swift */; };
 		8414127F27E0BA8100F7036B /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414127E27E0BA8100F7036B /* RegisterRouter.swift */; };
 		8414128227E0CF4C00F7036B /* Storyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414128127E0CF4C00F7036B /* Storyboardable.swift */; };
+		CCE65F1F27E922D5002ED848 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE65F1E27E922D5002ED848 /* AlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40C55B4CF0374194FAC0BB93 /* Pods_FireBaseChatAppV_per.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireBaseChatAppV_per.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5589A9826B74E238C72B9855 /* Pods-FireBaseChatAppVıper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBaseChatAppVıper.release.xcconfig"; path = "Target Support Files/Pods-FireBaseChatAppVıper/Pods-FireBaseChatAppVıper.release.xcconfig"; sourceTree = "<group>"; };
+		5EAB57F3D10DB9BF76E2FB52 /* Pods-FireBaseChatAppVıper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBaseChatAppVıper.debug.xcconfig"; path = "Target Support Files/Pods-FireBaseChatAppVıper/Pods-FireBaseChatAppVıper.debug.xcconfig"; sourceTree = "<group>"; };
 		8414122B27DE4E2600F7036B /* FireBaseChatAppVıper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FireBaseChatAppVıper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8414122E27DE4E2600F7036B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8414123027DE4E2600F7036B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +68,7 @@
 		8414127C27E0BA7400F7036B /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
 		8414127E27E0BA8100F7036B /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		8414128127E0CF4C00F7036B /* Storyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboardable.swift; sourceTree = "<group>"; };
+		CCE65F1E27E922D5002ED848 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +82,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02AAF2223DA1306E82832B00 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5EAB57F3D10DB9BF76E2FB52 /* Pods-FireBaseChatAppVıper.debug.xcconfig */,
+				5589A9826B74E238C72B9855 /* Pods-FireBaseChatAppVıper.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		1008697D1A29078DA15421A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				40C55B4CF0374194FAC0BB93 /* Pods_FireBaseChatAppV_per.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8414122227DE4E2600F7036B = {
 			isa = PBXGroup;
 			children = (
 				8414122D27DE4E2600F7036B /* FireBaseChatAppVıper */,
 				8414122C27DE4E2600F7036B /* Products */,
+				02AAF2223DA1306E82832B00 /* Pods */,
+				1008697D1A29078DA15421A6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +153,7 @@
 		8414124427DE4EAA00F7036B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				CCE65F1D27E922BD002ED848 /* AlertController */,
 				8414124527DE4F4400F7036B /* Extensions */,
 			);
 			path = Utilities;
@@ -311,6 +336,14 @@
 			path = AppManager;
 			sourceTree = "<group>";
 		};
+		CCE65F1D27E922BD002ED848 /* AlertController */ = {
+			isa = PBXGroup;
+			children = (
+				CCE65F1E27E922D5002ED848 /* AlertController.swift */,
+			);
+			path = AlertController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -318,9 +351,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8414123F27DE4E2800F7036B /* Build configuration list for PBXNativeTarget "FireBaseChatAppVıper" */;
 			buildPhases = (
+				A1644D77947937F4596E8EA3 /* [CP] Check Pods Manifest.lock */,
 				8414122727DE4E2600F7036B /* Sources */,
 				8414122827DE4E2600F7036B /* Frameworks */,
 				8414122927DE4E2600F7036B /* Resources */,
+				CD2983C92C34B5B2C8C7D5D1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -379,6 +414,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A1644D77947937F4596E8EA3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FireBaseChatAppVıper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CD2983C92C34B5B2C8C7D5D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FireBaseChatAppVıper/Pods-FireBaseChatAppVıper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FireBaseChatAppVıper/Pods-FireBaseChatAppVıper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FireBaseChatAppVıper/Pods-FireBaseChatAppVıper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8414122727DE4E2600F7036B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -392,6 +469,7 @@
 				8414126E27DF2C6D00F7036B /* AppManager.swift in Sources */,
 				8414123327DE4E2600F7036B /* LogInViewController.swift in Sources */,
 				8414127727DF30DE00F7036B /* LogInRouter.swift in Sources */,
+				CCE65F1F27E922D5002ED848 /* AlertController.swift in Sources */,
 				8414122F27DE4E2600F7036B /* AppDelegate.swift in Sources */,
 				8414125F27DE529B00F7036B /* ConversationsViewController.swift in Sources */,
 				8414127B27E0BA6900F7036B /* RegisterInteractor.swift in Sources */,
@@ -548,6 +626,7 @@
 		};
 		8414124027DE4E2800F7036B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EAB57F3D10DB9BF76E2FB52 /* Pods-FireBaseChatAppVıper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -576,6 +655,7 @@
 		};
 		8414124127DE4E2800F7036B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5589A9826B74E238C72B9855 /* Pods-FireBaseChatAppVıper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
