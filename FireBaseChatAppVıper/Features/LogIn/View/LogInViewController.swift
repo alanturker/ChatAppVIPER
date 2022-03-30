@@ -79,11 +79,11 @@ class LogInViewController: UIViewController {
         guard let email = emailText.text, let password = passwordText.text else { return }
         
         if email.isEmpty {
-            AlertController.emailEmpty(with: self)
+            AlertController.emailEmptyAlert(with: self)
         } else if password.isEmpty {
-            AlertController.passwordEmpty(with: self)
+            AlertController.passwordEmptyAlert(with: self)
         } else if password.count < 6 {
-            AlertController.passwordLessThanSix(with: self)
+            AlertController.passwordLessThanSixAlert(with: self)
         } else {
             // FireBase Code TO-DO
         }

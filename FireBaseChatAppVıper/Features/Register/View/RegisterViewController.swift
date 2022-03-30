@@ -17,6 +17,10 @@ class RegisterViewController: UIViewController {
         profilePictureButton.setBackgroundImage(UIImage(systemName: "person"), for: .normal)
         profilePictureButton.contentMode = .scaleAspectFit
         profilePictureButton.tintColor = .white
+        profilePictureButton.layer.masksToBounds = true
+        profilePictureButton.layer.cornerRadius = 125
+        profilePictureButton.layer.borderWidth = 2
+        profilePictureButton.layer.borderColor = UIColor.lightGray.cgColor
         return profilePictureButton
     }()
     
@@ -109,7 +113,7 @@ class RegisterViewController: UIViewController {
     }
     
     @objc private func didTappedProfilePic() {
-        print("pressed profile pic")
+        presentPhotoActionSheet()
     }
     
     @objc private func didTappedRegisterButton() {
@@ -117,15 +121,15 @@ class RegisterViewController: UIViewController {
             return
         }
         if firstname.isEmpty {
-            AlertController.firstNameEmpty(with: self)
+            AlertController.firstNameEmptyAlert(with: self)
         } else if lastName.isEmpty {
-            AlertController.lastNameEmpty(with: self)
+            AlertController.lastNameEmptyAlert(with: self)
         } else if email.isEmpty {
-            AlertController.emailEmpty(with: self)
+            AlertController.emailEmptyAlert(with: self)
         } else if password.isEmpty {
-            AlertController.passwordEmpty(with: self)
+            AlertController.passwordEmptyAlert(with: self)
         } else if password.count < 6 {
-            AlertController.passwordLessThanSix(with: self)
+            AlertController.passwordLessThanSixAlert(with: self)
         } else {
             // FireBase TO-DO
         }
@@ -156,7 +160,7 @@ class RegisterViewController: UIViewController {
         }
         
         firstNameText.snp.makeConstraints { make in
-            make.top.equalTo(profilePictureButton.snp.bottom)
+            make.top.equalTo(profilePictureButton.snp.bottom).offset(10)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
             make.height.equalTo(54)
@@ -205,6 +209,48 @@ extension RegisterViewController: UITextFieldDelegate {
             didTappedRegisterButton()
         }
         return true
+    }
+}
+// MARK: - Profile Picture Picker Methods
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func presentPhotoActionSheet() {
+        AlertController.profilePictureAlert(with: self) { [weak self] in
+            self?.presentLibrary()
+        } take: { [weak self] in
+            self?.presentCamera()
+        }
+
+    }
+    
+    func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        
+        present(vc, animated: true)
+    }
+    
+    func presentLibrary() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        
+        present(vc, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        
+        self.profilePictureButton.setImage(selectedImage, for: .normal)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 // MARK: - Presenter To View Conformable
