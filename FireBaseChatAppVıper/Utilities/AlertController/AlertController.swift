@@ -17,53 +17,18 @@ final class AlertController: NSObject {
         return Static.shared
     }
     
-    static func emailEmptyAlert(with vc: UIViewController) {
-        let alert = UIAlertController(title: "Woops !",
-                                      message: "Please enter an email.",
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        alert.addAction(action)
-        
-        vc.present(alert, animated: true, completion: nil)
+    enum Messages: String {
+        case emailEmpty = "Please enter an email."
+        case passwordEmpty = "Please enter a password."
+        case passwordLessThanSix = "Please enter a password with at least six digits."
+        case firstNameEmpty = "Please enter your First Name"
+        case lastNameEmpty = "Please enter your Last Name"
+        case emailAlreadyExists = "Looks like email address already exists."
     }
     
-    static func passwordEmptyAlert(with vc: UIViewController) {
+    static func notificationAlert(with vc: UIViewController, message: String) {
         let alert = UIAlertController(title: "Woops !",
-                                      message: "Please enter a password.",
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        alert.addAction(action)
-        
-        vc.present(alert, animated: true, completion: nil)
-    }
-    
-    static func passwordLessThanSixAlert(with vc: UIViewController) {
-        let alert = UIAlertController(title: "Woops !",
-                                      message: "Please enter a password with at least six digits.",
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        alert.addAction(action)
-        
-        vc.present(alert, animated: true, completion: nil)
-    }
-    
-    static func firstNameEmptyAlert(with vc: UIViewController) {
-        let alert = UIAlertController(title: "Woops !",
-                                      message: "Please enter your First Name",
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        alert.addAction(action)
-        
-        vc.present(alert, animated: true, completion: nil)
-    }
-    
-    static func lastNameEmptyAlert(with vc: UIViewController) {
-        let alert = UIAlertController(title: "Woops !",
-                                      message: "Please enter your Last Name",
+                                      message: message,
                                       preferredStyle: .alert)
         let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         

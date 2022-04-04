@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
@@ -79,13 +80,25 @@ class LogInViewController: UIViewController {
         guard let email = emailText.text, let password = passwordText.text else { return }
         
         if email.isEmpty {
-            AlertController.emailEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.emailEmpty.rawValue)
         } else if password.isEmpty {
-            AlertController.passwordEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordEmpty.rawValue)
         } else if password.count < 6 {
-            AlertController.passwordLessThanSixAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordLessThanSix.rawValue)
         } else {
             // FireBase Code TO-DO
+            FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+                guard let self = self else { return }
+                guard authResult != nil, error == nil else {
+                    print("Failed to LogIn user with email: \(email)")
+                    return
+                }
+                
+//                let user = result.user
+//                print("Logged In User: \(user)")
+                
+                self.navigationController?.dismiss(animated: true, completion: nil)
+            }
         }
         
     }

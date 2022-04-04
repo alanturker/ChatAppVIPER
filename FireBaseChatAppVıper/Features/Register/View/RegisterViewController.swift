@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
@@ -14,13 +15,11 @@ class RegisterViewController: UIViewController {
     
     private var profilePictureButton: UIButton = {
         let profilePictureButton = UIButton()
-        profilePictureButton.setBackgroundImage(UIImage(systemName: "person"), for: .normal)
+        profilePictureButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
         profilePictureButton.contentMode = .scaleAspectFit
         profilePictureButton.tintColor = .white
         profilePictureButton.layer.masksToBounds = true
-        profilePictureButton.layer.cornerRadius = 125
-        profilePictureButton.layer.borderWidth = 2
-        profilePictureButton.layer.borderColor = UIColor.lightGray.cgColor
+        profilePictureButton.layer.cornerRadius = 120
         return profilePictureButton
     }()
     
@@ -121,17 +120,36 @@ class RegisterViewController: UIViewController {
             return
         }
         if firstname.isEmpty {
-            AlertController.firstNameEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.firstNameEmpty.rawValue)
         } else if lastName.isEmpty {
-            AlertController.lastNameEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.lastNameEmpty.rawValue)
         } else if email.isEmpty {
-            AlertController.emailEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.emailEmpty.rawValue)
         } else if password.isEmpty {
-            AlertController.passwordEmptyAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordEmpty.rawValue)
         } else if password.count < 6 {
-            AlertController.passwordLessThanSixAlert(with: self)
+            AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordLessThanSix.rawValue)
         } else {
             // FireBase TO-DO
+            DatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
+                guard let self = self else { return }
+                guard !operationStatus else {
+                    // alert user already exists
+                    AlertController.notificationAlert(with: self, message: AlertController.Messages.emailAlreadyExists.rawValue)
+                    return
+                }
+                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    guard authResult != nil, error == nil else {
+                        print("Error Creating User")
+                        return
+                    }
+                    
+                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
+                                                                        lastNmae: lastName,
+                                                                        emailAddress: email))
+                    self.presenter.router.openConversations(with: self)
+                }
+            }
         }
     }
     
@@ -155,7 +173,7 @@ class RegisterViewController: UIViewController {
     private func setupConstraints() {
         profilePictureButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
-            make.width.height.equalTo(250)
+            make.width.height.equalTo(240)
             make.centerX.equalTo(view.snp.centerX)
         }
         

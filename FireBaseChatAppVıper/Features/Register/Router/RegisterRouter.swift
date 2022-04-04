@@ -21,6 +21,10 @@ class RegisterRouter: RegisterPresenterToRouterConformable {
     func goBack() {
         viewController?.dismiss(animated: true, completion: nil)
     }
+    
+    func openConversations(with vc: UIViewController){
+        AppManager.shared.openConversations(with: vc)
+    }
 }
 
 extension RegisterRouter {
