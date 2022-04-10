@@ -8,6 +8,9 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import FBSDKLoginKit
+import GoogleSignIn
+import Firebase
 
 class LogInViewController: UIViewController {
     
@@ -61,6 +64,14 @@ class LogInViewController: UIViewController {
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return loginButton
     }()
+    
+    private let faceBookLoginButton: FBLoginButton = {
+        let button = FBLoginButton()
+        button.permissions = ["email","public_profile"]
+        return button
+    }()
+    
+    private let googleLoginButton = GIDSignInButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +83,12 @@ class LogInViewController: UIViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(didTapRegister))
-        loginButton.addTarget(self, action: #selector(didTappedLogInButton), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(didTappedLoginButton), for: .touchUpInside)
+        googleLoginButton.addTarget(self, action: #selector(didTappedGoogleLoginButton), for: .touchUpInside)
         setupUI()
     }
     
-    @objc private func didTappedLogInButton() {
+    @objc private func didTappedLoginButton() {
         guard let email = emailText.text, let password = passwordText.text else { return }
         
         if email.isEmpty {
@@ -88,7 +100,7 @@ class LogInViewController: UIViewController {
         } else {
             // FireBase Code TO-DO
             FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-                guard let self = self else { return }
+                guard self != nil else { return }
                 guard authResult != nil, error == nil else {
                     print("Failed to LogIn user with email: \(email)")
                     return
@@ -97,7 +109,7 @@ class LogInViewController: UIViewController {
 //                let user = result.user
 //                print("Logged In User: \(user)")
                 
-                self.navigationController?.dismiss(animated: true, completion: nil)
+                self?.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
         
@@ -108,14 +120,14 @@ class LogInViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.addSubviews(chatAppImage, emailText, passwordText, loginButton)
+        view.addSubviews(chatAppImage, emailText, passwordText, loginButton, faceBookLoginButton, googleLoginButton)
         
         // Constraint with SnapKit
         setupConstraints()
         // Delegates
         emailText.delegate = self
         passwordText.delegate = self
-        
+        faceBookLoginButton.delegate = self
     }
     
     private func setupConstraints() {
@@ -146,6 +158,20 @@ class LogInViewController: UIViewController {
             make.height.equalTo(54)
         }
         
+        faceBookLoginButton.snp.makeConstraints { make in
+            make.top.equalTo(loginButton.snp.bottom).offset(24)
+            make.left.equalToSuperview().offset(40)
+            make.right.equalToSuperview().offset(-40)
+            make.height.equalTo(54)
+        }
+        
+        googleLoginButton.snp.makeConstraints { make in
+            make.top.equalTo(faceBookLoginButton.snp.bottom).offset(24)
+            make.left.equalToSuperview().offset(40)
+            make.right.equalToSuperview().offset(-40)
+            make.height.equalTo(54)
+        }
+        
     }
 
 
@@ -157,9 +183,105 @@ extension LogInViewController: UITextFieldDelegate {
         if textField == emailText {
             passwordText.becomeFirstResponder()
         } else if textField == passwordText {
-            didTappedLogInButton()
+            didTappedLoginButton()
         }
         return true
+    }
+}
+//MARK: - Google Login Methods
+extension LogInViewController {
+    @objc private func didTappedGoogleLoginButton() {
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        
+        // Create Google Sign In configuration object.
+        let config = GIDConfiguration(clientID: clientID)
+        
+        // Start the sign in flow!
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { [unowned self] user, error in
+           guard user != nil, error == nil else {
+                print("Failed to sign in with Google")
+                return
+            }
+            
+            guard let authentication = user?.authentication,
+                  let idToken = authentication.idToken,
+                  let email = user?.profile?.email,
+                  let firstName = user?.profile?.givenName,
+                  let lastName = user?.profile?.familyName else { return }
+                    
+            DatabaseManager.shared.userExists(with: email) { operationStatus in
+                if !operationStatus {
+                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
+                }
+            }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: authentication.accessToken)
+            
+            FirebaseAuth.Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+                guard self != nil else { return }
+                guard authResult != nil, error == nil else {
+                    print("Failed to signIn with Google credential to Firebase")
+                    return
+                }
+                
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+                print("Successfully logged in with Google credential to Firebase")
+            }
+        }
+    }
+}
+//MARK: - Facebook Login Delegate Methods
+extension LogInViewController: LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        //no-operation
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else {
+            print("Failed to login Facebook")
+            return
+        }
+        
+        let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields": "email,name"], tokenString: token, version: nil, httpMethod: .get)
+        
+        facebookRequest.start { _, result, error in
+            guard let result = result as? [String: Any], error == nil else {
+                print("Failed to start Facebook graphRequest")
+                return
+            }
+            
+            guard let userName = result["name"] as? String, let email = result["email"] as? String else {
+                print("Failed to get Name & Email from Facebook Result")
+                return
+            }
+            
+            let nameComponents = userName.components(separatedBy: " ")
+            
+            guard nameComponents.count == 2 else { return }
+            
+            let firstName = nameComponents[0]
+            let lastName = nameComponents[1]
+            
+            DatabaseManager.shared.userExists(with: email) { operationStatus in
+                if !operationStatus {
+                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
+                }
+            }
+            
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            
+            FirebaseAuth.Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+                guard self != nil else { return }
+                guard authResult != nil, error == nil else {
+                    print("Failed to signIn with Facebook credential to Firebase")
+                    return
+                }
+                
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+                print("Successfully logged in with Facebook credential to Firebase")
+            }
+        }
     }
 }
 // MARK: - Presenter To View Conformable

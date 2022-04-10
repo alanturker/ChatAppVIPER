@@ -35,4 +35,5 @@ protocol LogInInteractorToPresenterConformable: AnyObject {
 
 protocol LogInPresenterToRouterConformable: AnyObject {
     func openRegister(with vc: UIViewController)
+    func openConversations(with vc: UIViewController)
 }

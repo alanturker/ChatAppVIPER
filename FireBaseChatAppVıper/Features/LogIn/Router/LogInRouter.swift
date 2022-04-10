@@ -22,6 +22,9 @@ class LogInRouter: LogInPresenterToRouterConformable {
         AppManager.shared.openRegister(with: vc)
     }
     
+    func openConversations(with vc: UIViewController) {
+        AppManager.shared.openConversations(with: vc)
+    }
 }
 
 // MARK: Module Creation

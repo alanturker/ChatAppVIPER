@@ -133,21 +133,22 @@ class RegisterViewController: UIViewController {
             // FireBase TO-DO
             DatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
                 guard let self = self else { return }
-                guard !operationStatus else {
+                if operationStatus {
                     // alert user already exists
                     AlertController.notificationAlert(with: self, message: AlertController.Messages.emailAlreadyExists.rawValue)
                     return
-                }
-                FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                    guard authResult != nil, error == nil else {
-                        print("Error Creating User")
-                        return
+                } else {
+                    FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                        guard authResult != nil, error == nil else {
+                            print("Error Creating User")
+                            return
+                        }
+                        
+                        DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
+                                                                            lastNmae: lastName,
+                                                                            emailAddress: email))
+                        self.presenter.router.openConversations(with: self)
                     }
-                    
-                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
-                                                                        lastNmae: lastName,
-                                                                        emailAddress: email))
-                    self.presenter.router.openConversations(with: self)
                 }
             }
         }

@@ -55,4 +55,16 @@ final class AlertController: NSObject {
         
         vc.present(actionSheet, animated: true, completion: nil)
     }
+    
+    static func logOutAlert(with vc: UIViewController, completion: @escaping () -> Void) {
+        let actionSheet = UIAlertController(title: "Log Out", message: "Do you really want to log out?", preferredStyle: .actionSheet)
+        let logOutAction = UIAlertAction(title: "Log Out", style: .destructive) { _ in
+            completion()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        actionSheet.addAction(logOutAction)
+        actionSheet.addAction(cancelAction)
+        
+        vc.present(actionSheet, animated: true, completion: nil)
+    }
 }

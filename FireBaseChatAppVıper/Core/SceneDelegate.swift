@@ -6,11 +6,11 @@
 //
 
 import UIKit
+import FBSDKCoreKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,10 +20,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let initialVC = ConversationRouter.createModule()
-        let nav = UINavigationController(rootViewController: initialVC)
-        window?.rootViewController = nav
+        let chatVC = ConversationRouter.createModule()
+        let chatNav = UINavigationController(rootViewController: chatVC)
+        let profileVC = ProfileRouter.createModule()
+        let profileNav = UINavigationController(rootViewController: profileVC)
+        
+        let subModules = (
+            conversations: chatNav,
+            profilePage: profileNav
+        )
+        
+        let tabBarController = ChatAppTabBarBuilder.build(with: subModules)
+        
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -56,4 +79,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+
 
