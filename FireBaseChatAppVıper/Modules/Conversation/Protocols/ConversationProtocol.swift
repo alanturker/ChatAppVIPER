@@ -14,7 +14,7 @@ protocol ConversationViewToPresenterConformable: AnyObject {
     
     func initialize()
     func goBack()
-    func openLogInPage(with vc: UIViewController)
+    func openLogInPage()
 
 }
 
@@ -34,5 +34,5 @@ protocol ConversationInteractorToPresenterConformable: AnyObject {
 }
 
 protocol ConversationPresenterToRouterConformable: AnyObject {
-    func openLogIn(with vc: UIViewController)
+    func openLogIn()
 }

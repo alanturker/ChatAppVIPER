@@ -116,7 +116,7 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func didTapRegister() {
-        presenter.openRegisterPage(with: self)
+        presenter.openRegisterPage()
     }
     
     private func setupUI() {
@@ -209,9 +209,9 @@ extension LogInViewController {
                   let firstName = user?.profile?.givenName,
                   let lastName = user?.profile?.familyName else { return }
                     
-            DatabaseManager.shared.userExists(with: email) { operationStatus in
+            FireBaseDatabaseManager.shared.userExists(with: email) { operationStatus in
                 if !operationStatus {
-                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
+                    FireBaseDatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
                 }
             }
             
@@ -263,9 +263,9 @@ extension LogInViewController: LoginButtonDelegate {
             let firstName = nameComponents[0]
             let lastName = nameComponents[1]
             
-            DatabaseManager.shared.userExists(with: email) { operationStatus in
+            FireBaseDatabaseManager.shared.userExists(with: email) { operationStatus in
                 if !operationStatus {
-                    DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
+                    FireBaseDatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstName, lastNmae: lastName, emailAddress: email))
                 }
             }
             

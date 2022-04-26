@@ -131,7 +131,7 @@ class RegisterViewController: UIViewController {
             AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordLessThanSix.rawValue)
         } else {
             // FireBase TO-DO
-            DatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
+            FireBaseDatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
                 guard let self = self else { return }
                 if operationStatus {
                     // alert user already exists
@@ -144,7 +144,7 @@ class RegisterViewController: UIViewController {
                             return
                         }
                         
-                        DatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
+                        FireBaseDatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
                                                                             lastNmae: lastName,
                                                                             emailAddress: email))
                         self.presenter.router.openConversations(with: self)

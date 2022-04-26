@@ -5,7 +5,7 @@
 //  Created by admin on 15.03.2022.
 //
 
-import UIKit
+import Foundation
 
 class RegisterPresenter: RegisterViewToPresenterConformable {
     var view: RegisterPresenterToViewConformable?

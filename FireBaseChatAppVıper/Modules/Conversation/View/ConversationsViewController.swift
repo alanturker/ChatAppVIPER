@@ -27,7 +27,7 @@ class ConversationsViewController: UIViewController {
     
     private func validateAuth() {
         if FirebaseAuth.Auth.auth().currentUser == nil {
-            presenter.openLogInPage(with: self)
+            presenter.openLogInPage()
         } else {
             
         }

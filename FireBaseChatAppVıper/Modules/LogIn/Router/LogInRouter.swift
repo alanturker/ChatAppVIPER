@@ -18,12 +18,16 @@ class LogInRouter: LogInPresenterToRouterConformable {
     
     var viewController: LogInViewController?
     
-    func openRegister(with vc: UIViewController) {
-        AppManager.shared.openRegister(with: vc)
+    func openRegister() {
+        if let viewController = viewController {
+            AppManager.shared.openRegister(with: viewController)
+        }
     }
     
-    func openConversations(with vc: UIViewController) {
-        AppManager.shared.openConversations(with: vc)
+    func openConversations() {
+        if let viewController = viewController {
+            AppManager.shared.openConversations(with: viewController)
+        }
     }
 }
 

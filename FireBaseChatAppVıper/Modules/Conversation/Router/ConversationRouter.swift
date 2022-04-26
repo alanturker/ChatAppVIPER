@@ -18,8 +18,10 @@ class ConversationRouter: ConversationPresenterToRouterConformable {
     
     var viewController: ConversationsViewController?
     
-    func openLogIn(with vc: UIViewController) {
-        AppManager.shared.openLogIn(with: vc)
+    func openLogIn() {
+        if let viewController = viewController {
+            AppManager.shared.openLogIn(with: viewController)
+        }
     }
     
 }

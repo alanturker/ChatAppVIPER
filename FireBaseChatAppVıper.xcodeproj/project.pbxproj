@@ -33,8 +33,14 @@
 		8414127D27E0BA7400F7036B /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414127C27E0BA7400F7036B /* RegisterPresenter.swift */; };
 		8414127F27E0BA8100F7036B /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414127E27E0BA8100F7036B /* RegisterRouter.swift */; };
 		8414128227E0CF4C00F7036B /* Storyboardable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414128127E0CF4C00F7036B /* Storyboardable.swift */; };
+		CCB02EAA2817F9BC004C04B0 /* Pods_FireBaseChatAppVıper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EA92817F9BC004C04B0 /* Pods_FireBaseChatAppVıper.framework */; };
+		CCB02EAC2817F9D8004C04B0 /* JGProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EAB2817F9D8004C04B0 /* JGProgressHUD.framework */; };
+		CCB02EAE2817F9D8004C04B0 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EAD2817F9D8004C04B0 /* MessageKit.framework */; };
+		CCB02EB02817F9D8004C04B0 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EAF2817F9D8004C04B0 /* Realm.framework */; };
+		CCB02EB22817F9D8004C04B0 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EB12817F9D8004C04B0 /* RealmSwift.framework */; };
+		CCB02EB42817F9D8004C04B0 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB02EB32817F9D8004C04B0 /* SDWebImage.framework */; };
 		CCE1D2B627F5E96D00D06BDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCE1D2B527F5E96D00D06BDB /* GoogleService-Info.plist */; };
-		CCE1D2B927FB22CA00D06BDB /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE1D2B827FB22CA00D06BDB /* DatabaseManager.swift */; };
+		CCE1D2B927FB22CA00D06BDB /* FireBaseDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE1D2B827FB22CA00D06BDB /* FireBaseDatabaseManager.swift */; };
 		CCE1D2BB27FB24B100D06BDB /* ChatAppUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE1D2BA27FB24B100D06BDB /* ChatAppUser.swift */; };
 		CCE1D2BE27FC6DDF00D06BDB /* ChatAppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE1D2BD27FC6DDF00D06BDB /* ChatAppTabBarController.swift */; };
 		CCE1D2C027FC6EC300D06BDB /* ChatAppTabBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE1D2BF27FC6EC300D06BDB /* ChatAppTabBarBuilder.swift */; };
@@ -50,7 +56,6 @@
 		CCE1D2DB2800336400D06BDB /* FBSDKCoreKit_Basics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE1D2DA2800336400D06BDB /* FBSDKCoreKit_Basics.xcframework */; };
 		CCE1D2DD2800336400D06BDB /* FBSDKCoreKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE1D2DC2800336400D06BDB /* FBSDKCoreKit.xcframework */; };
 		CCE1D2DF2800336400D06BDB /* FBSDKLoginKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE1D2DE2800336400D06BDB /* FBSDKLoginKit.xcframework */; };
-		CCE1D2E12802ED4200D06BDB /* Pods_FireBaseChatAppVıper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE1D2E02802ED4200D06BDB /* Pods_FireBaseChatAppVıper.framework */; };
 		CCE65F1F27E922D5002ED848 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE65F1E27E922D5002ED848 /* AlertController.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,8 +91,14 @@
 		8414127C27E0BA7400F7036B /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
 		8414127E27E0BA8100F7036B /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		8414128127E0CF4C00F7036B /* Storyboardable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboardable.swift; sourceTree = "<group>"; };
+		CCB02EA92817F9BC004C04B0 /* Pods_FireBaseChatAppVıper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_FireBaseChatAppVıper.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB02EAB2817F9D8004C04B0 /* JGProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JGProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB02EAD2817F9D8004C04B0 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB02EAF2817F9D8004C04B0 /* Realm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Realm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB02EB12817F9D8004C04B0 /* RealmSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB02EB32817F9D8004C04B0 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCE1D2B527F5E96D00D06BDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CCE1D2B827FB22CA00D06BDB /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		CCE1D2B827FB22CA00D06BDB /* FireBaseDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseDatabaseManager.swift; sourceTree = "<group>"; };
 		CCE1D2BA27FB24B100D06BDB /* ChatAppUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppUser.swift; sourceTree = "<group>"; };
 		CCE1D2BD27FC6DDF00D06BDB /* ChatAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppTabBarController.swift; sourceTree = "<group>"; };
 		CCE1D2BF27FC6EC300D06BDB /* ChatAppTabBarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAppTabBarBuilder.swift; sourceTree = "<group>"; };
@@ -103,7 +114,6 @@
 		CCE1D2DA2800336400D06BDB /* FBSDKCoreKit_Basics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit_Basics.xcframework; path = Pods/FBSDKCoreKit_Basics/XCFrameworks/FBSDKCoreKit_Basics.xcframework; sourceTree = "<group>"; };
 		CCE1D2DC2800336400D06BDB /* FBSDKCoreKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKCoreKit.xcframework; path = Pods/FBSDKCoreKit/XCFrameworks/FBSDKCoreKit.xcframework; sourceTree = "<group>"; };
 		CCE1D2DE2800336400D06BDB /* FBSDKLoginKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBSDKLoginKit.xcframework; path = Pods/FBSDKLoginKit/XCFrameworks/FBSDKLoginKit.xcframework; sourceTree = "<group>"; };
-		CCE1D2E02802ED4200D06BDB /* Pods_FireBaseChatAppVıper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_FireBaseChatAppVıper.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCE65F1E27E922D5002ED848 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,7 +122,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCE1D2E12802ED4200D06BDB /* Pods_FireBaseChatAppVıper.framework in Frameworks */,
+				CCB02EAC2817F9D8004C04B0 /* JGProgressHUD.framework in Frameworks */,
+				CCB02EAE2817F9D8004C04B0 /* MessageKit.framework in Frameworks */,
+				CCB02EB02817F9D8004C04B0 /* Realm.framework in Frameworks */,
+				CCB02EB22817F9D8004C04B0 /* RealmSwift.framework in Frameworks */,
+				CCB02EB42817F9D8004C04B0 /* SDWebImage.framework in Frameworks */,
+				CCB02EAA2817F9BC004C04B0 /* Pods_FireBaseChatAppVıper.framework in Frameworks */,
 				CCE1D2DB2800336400D06BDB /* FBSDKCoreKit_Basics.xcframework in Frameworks */,
 				CCE1D2DD2800336400D06BDB /* FBSDKCoreKit.xcframework in Frameworks */,
 				CCE1D2DF2800336400D06BDB /* FBSDKLoginKit.xcframework in Frameworks */,
@@ -135,7 +150,12 @@
 		4EBA5B670A1F392616B18D7C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CCE1D2E02802ED4200D06BDB /* Pods_FireBaseChatAppVıper.framework */,
+				CCB02EAB2817F9D8004C04B0 /* JGProgressHUD.framework */,
+				CCB02EAD2817F9D8004C04B0 /* MessageKit.framework */,
+				CCB02EAF2817F9D8004C04B0 /* Realm.framework */,
+				CCB02EB12817F9D8004C04B0 /* RealmSwift.framework */,
+				CCB02EB32817F9D8004C04B0 /* SDWebImage.framework */,
+				CCB02EA92817F9BC004C04B0 /* Pods_FireBaseChatAppVıper.framework */,
 				CCE1D2DA2800336400D06BDB /* FBSDKCoreKit_Basics.xcframework */,
 				CCE1D2DC2800336400D06BDB /* FBSDKCoreKit.xcframework */,
 				CCE1D2DE2800336400D06BDB /* FBSDKLoginKit.xcframework */,
@@ -166,7 +186,7 @@
 		8414122D27DE4E2600F7036B /* FireBaseChatAppVıper */ = {
 			isa = PBXGroup;
 			children = (
-				8414124327DE4E9D00F7036B /* Features */,
+				8414124327DE4E9D00F7036B /* Modules */,
 				8414124427DE4EAA00F7036B /* Utilities */,
 				8414126C27DF2C5A00F7036B /* AppManager */,
 				CCE1D2B727FB22A900D06BDB /* DatabaseManager */,
@@ -188,7 +208,7 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		8414124327DE4E9D00F7036B /* Features */ = {
+		8414124327DE4E9D00F7036B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				CCE1D2BC27FC6DC300D06BDB /* ChatAppTabBarController */,
@@ -197,7 +217,7 @@
 				8414124A27DE509400F7036B /* LogIn */,
 				CCE1D2C327FC772100D06BDB /* Profile */,
 			);
-			path = Features;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		8414124427DE4EAA00F7036B /* Utilities */ = {
@@ -390,7 +410,7 @@
 		CCE1D2B727FB22A900D06BDB /* DatabaseManager */ = {
 			isa = PBXGroup;
 			children = (
-				CCE1D2B827FB22CA00D06BDB /* DatabaseManager.swift */,
+				CCE1D2B827FB22CA00D06BDB /* FireBaseDatabaseManager.swift */,
 				CCE1D2BA27FB24B100D06BDB /* ChatAppUser.swift */,
 			);
 			path = DatabaseManager;
@@ -603,7 +623,7 @@
 				CCE1D2D727FEF35F00D06BDB /* K.swift in Sources */,
 				CCE1D2BB27FB24B100D06BDB /* ChatAppUser.swift in Sources */,
 				8414126527DE587100F7036B /* ConversationsInteractor.swift in Sources */,
-				CCE1D2B927FB22CA00D06BDB /* DatabaseManager.swift in Sources */,
+				CCE1D2B927FB22CA00D06BDB /* FireBaseDatabaseManager.swift in Sources */,
 				8414126E27DF2C6D00F7036B /* AppManager.swift in Sources */,
 				8414123327DE4E2600F7036B /* LogInViewController.swift in Sources */,
 				8414127727DF30DE00F7036B /* LogInRouter.swift in Sources */,

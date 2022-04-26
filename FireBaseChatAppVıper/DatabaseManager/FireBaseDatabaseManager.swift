@@ -8,9 +8,9 @@
 import Foundation
 import FirebaseDatabase
 
-final class DatabaseManager {
+final class FireBaseDatabaseManager {
     
-    static let shared: DatabaseManager = DatabaseManager()
+    static let shared: FireBaseDatabaseManager = FireBaseDatabaseManager()
     
     private let database = Database.database().reference()
     
@@ -19,7 +19,7 @@ final class DatabaseManager {
 }
 
 //MARK: - Account Management
-extension DatabaseManager {
+extension FireBaseDatabaseManager {
     public func userExists(with email: String, completion: @escaping (_ operationStatus: Bool) -> Void) {
         var safeEmail = email.replacingOccurrences(of: ".", with: "-")
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")

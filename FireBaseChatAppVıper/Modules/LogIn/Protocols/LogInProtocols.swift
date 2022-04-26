@@ -14,7 +14,7 @@ protocol LogInViewToPresenterConformable: AnyObject {
     
     func initialize()
     func goBack()
-    func openRegisterPage(with vc: UIViewController)
+    func openRegisterPage()
 
 }
 
@@ -34,6 +34,6 @@ protocol LogInInteractorToPresenterConformable: AnyObject {
 }
 
 protocol LogInPresenterToRouterConformable: AnyObject {
-    func openRegister(with vc: UIViewController)
-    func openConversations(with vc: UIViewController)
+    func openRegister()
+    func openConversations()
 }

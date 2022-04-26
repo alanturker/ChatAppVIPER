@@ -5,7 +5,7 @@
 //  Created by admin on 13.03.2022.
 //
 
-import UIKit
+import Foundation
 
 class ConversationPresenter: ConversationViewToPresenterConformable {
     var view: ConversationPresenterToViewConformable?
@@ -25,8 +25,8 @@ class ConversationPresenter: ConversationViewToPresenterConformable {
       
     }
     
-    func openLogInPage(with vc: UIViewController) {
-        router.openLogIn(with: vc)
+    func openLogInPage() {
+        router.openLogIn()
     }
 }
 
