@@ -8,7 +8,7 @@
 import Foundation
 
 class ConversationPresenter: ConversationViewToPresenterConformable {
-    var view: ConversationPresenterToViewConformable?
+    weak var view: ConversationPresenterToViewConformable?
     var router: ConversationPresenterToRouterConformable
     var interactor: ConversationPresenterToInteractorConformable
     
@@ -27,6 +27,14 @@ class ConversationPresenter: ConversationViewToPresenterConformable {
     
     func openLogInPage() {
         router.openLogIn()
+    }
+    
+    func openChatPage() {
+        router.openChat()
+    }
+    
+    func openNewConversationPage() {
+        router.openNewConversation()
     }
 }
 

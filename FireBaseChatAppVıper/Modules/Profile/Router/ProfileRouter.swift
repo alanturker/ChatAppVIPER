@@ -16,7 +16,7 @@ class ProfileRouter: ProfilePresenterToRouterConformable {
         return Static.shared
     }
     
-    var viewController: ProfileViewController?
+    weak var viewController: ProfileViewController?
     
     func openLogInPage(with vc: UIViewController) {
         AppManager.shared.openLogIn(with: vc)

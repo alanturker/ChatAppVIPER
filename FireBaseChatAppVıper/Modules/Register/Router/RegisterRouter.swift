@@ -16,7 +16,7 @@ class RegisterRouter: RegisterPresenterToRouterConformable {
         return Static.shared
     }
     
-    var viewController: RegisterViewController?
+    weak var viewController: RegisterViewController?
     
     func goBack() {
         viewController?.dismiss(animated: true, completion: nil)

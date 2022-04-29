@@ -16,11 +16,23 @@ class ConversationRouter: ConversationPresenterToRouterConformable {
         return Static.shared
     }
     
-    var viewController: ConversationsViewController?
+    weak var viewController: ConversationsViewController?
     
     func openLogIn() {
         if let viewController = viewController {
             AppManager.shared.openLogIn(with: viewController)
+        }
+    }
+    
+    func openChat() {
+        if let viewController = viewController {
+            AppManager.shared.openChat(with: viewController)
+        }
+    }
+    
+    func openNewConversation() {
+        if let viewController = viewController {
+            AppManager.shared.openNewConversation(with: viewController)
         }
     }
     

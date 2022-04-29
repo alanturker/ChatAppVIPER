@@ -16,7 +16,7 @@ class LogInRouter: LogInPresenterToRouterConformable {
         return Static.shared
     }
     
-    var viewController: LogInViewController?
+    weak var viewController: LogInViewController?
     
     func openRegister() {
         if let viewController = viewController {

@@ -8,10 +8,13 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController {
     
     var presenter: RegisterViewToPresenterConformable!
+    
+    private var spinner = JGProgressHUD(style: .dark)
     
     private var profilePictureButton: UIButton = {
         let profilePictureButton = UIButton()
@@ -109,6 +112,21 @@ class RegisterViewController: UIViewController {
         registerButton.addTarget(self, action: #selector(didTappedRegisterButton), for: .touchUpInside)
         profilePictureButton.addTarget(self, action: #selector(didTappedProfilePic), for: .touchUpInside)
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        dismissKeyboard()
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        self.view.frame.origin.y = 0 - (keyboardSize.height/2)
     }
     
     @objc private func didTappedProfilePic() {
@@ -130,9 +148,15 @@ class RegisterViewController: UIViewController {
         } else if password.count < 6 {
             AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordLessThanSix.rawValue)
         } else {
+            spinner.show(in: view)
             // FireBase TO-DO
             FireBaseDatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
                 guard let self = self else { return }
+                
+                DispatchQueue.main.async {
+                    self.spinner.dismiss(animated: true)
+                }
+                
                 if operationStatus {
                     // alert user already exists
                     AlertController.notificationAlert(with: self, message: AlertController.Messages.emailAlreadyExists.rawValue)
@@ -229,6 +253,17 @@ extension RegisterViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    func dismissKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboardTouchOutside))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboardTouchOutside() {
+        view.endEditing(true)
+    }
+    
 }
 // MARK: - Profile Picture Picker Methods
 extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

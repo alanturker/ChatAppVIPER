@@ -41,4 +41,20 @@ final class AppManager: NSObject {
         
         vc.present(nav, animated: true, completion: nil)
     }
+    
+    func openChat(with vc: UIViewController) {
+        let chatVC = ChatRouter.createModule()
+        let nav = UINavigationController(rootViewController: chatVC)
+        nav.modalPresentationStyle = .fullScreen
+        
+        vc.present(nav, animated: true, completion: nil)
+    }
+    
+    func openNewConversation(with vc: UIViewController) {
+        let newConvVC = NewConversationRouter.createModule()
+        let nav = UINavigationController(rootViewController: newConvVC)
+        nav.modalPresentationStyle = .formSheet
+        
+        vc.present(nav, animated: true, completion: nil)
+    }
 }

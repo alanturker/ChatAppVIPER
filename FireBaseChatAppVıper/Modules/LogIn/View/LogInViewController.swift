@@ -11,10 +11,13 @@ import FirebaseAuth
 import FBSDKLoginKit
 import GoogleSignIn
 import Firebase
+import JGProgressHUD
 
 class LogInViewController: UIViewController {
     
     var presenter: LogInViewToPresenterConformable!
+    
+    private var spinner = JGProgressHUD(style: .dark)
     
     private var chatAppImage: UIImageView = {
         let chatImage = UIImageView()
@@ -86,6 +89,21 @@ class LogInViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(didTappedLoginButton), for: .touchUpInside)
         googleLoginButton.addTarget(self, action: #selector(didTappedGoogleLoginButton), for: .touchUpInside)
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        dismissKeyboard()
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        self.view.frame.origin.y = 0 - (keyboardSize.height/2)
     }
     
     @objc private func didTappedLoginButton() {
@@ -98,9 +116,15 @@ class LogInViewController: UIViewController {
         } else if password.count < 6 {
             AlertController.notificationAlert(with: self, message: AlertController.Messages.passwordLessThanSix.rawValue)
         } else {
+            spinner.show(in: view)
             // FireBase Code TO-DO
             FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
                 guard self != nil else { return }
+                
+                DispatchQueue.main.async {
+                    self?.spinner.dismiss(animated: true)
+                }
+                
                 guard authResult != nil, error == nil else {
                     print("Failed to LogIn user with email: \(email)")
                     return
@@ -186,6 +210,16 @@ extension LogInViewController: UITextFieldDelegate {
             didTappedLoginButton()
         }
         return true
+    }
+    
+    func dismissKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(dismissKeyboardTouchOutside))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboardTouchOutside() {
+        view.endEditing(true)
     }
 }
 //MARK: - Google Login Methods

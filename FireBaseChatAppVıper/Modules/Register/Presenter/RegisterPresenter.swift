@@ -8,7 +8,7 @@
 import Foundation
 
 class RegisterPresenter: RegisterViewToPresenterConformable {
-    var view: RegisterPresenterToViewConformable?
+    weak var view: RegisterPresenterToViewConformable?
     var router: RegisterPresenterToRouterConformable
     var interactor: RegisterPresenterToInteractorConformable
     
