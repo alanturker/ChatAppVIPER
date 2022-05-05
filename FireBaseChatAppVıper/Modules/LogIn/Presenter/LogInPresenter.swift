@@ -24,10 +24,7 @@ class LogInPresenter: LogInViewToPresenterConformable {
     func goBack() {
       
     }
-    
-    func openRegisterPage() {
-        router.openRegister()
-    }
+
 }
 
 extension LogInPresenter: LogInInteractorToPresenterConformable {

@@ -153,10 +153,6 @@ class RegisterViewController: UIViewController {
             FireBaseDatabaseManager.shared.userExists(with: email) { [weak self] operationStatus in
                 guard let self = self else { return }
                 
-                DispatchQueue.main.async {
-                    self.spinner.dismiss(animated: true)
-                }
-                
                 if operationStatus {
                     // alert user already exists
                     AlertController.notificationAlert(with: self, message: AlertController.Messages.emailAlreadyExists.rawValue)
@@ -168,10 +164,33 @@ class RegisterViewController: UIViewController {
                             return
                         }
                         
-                        FireBaseDatabaseManager.shared.insertUser(with: ChatAppUser(firstName: firstname,
-                                                                            lastNmae: lastName,
-                                                                            emailAddress: email))
-                        self.presenter.router.openConversations(with: self)
+                        let chatUser = ChatAppUser(firstName: firstname,
+                                                   lastNmae: lastName,
+                                                   emailAddress: email)
+                        
+                        FireBaseDatabaseManager.shared.insertUser(with: chatUser) { success in
+                            if success {
+                                //upload image
+                                guard let image = self.profilePictureButton.imageView?.image, let data = image.pngData() else {
+                                    return
+                                }
+                                let fileName = chatUser.profilePictureFileName
+                                FireBaseStorageManager.shared.uploadPicture(with: data, fileName: fileName, completion: { result in
+                                    switch result {
+                                    case .success(let downloadURL):
+                                        UserDefaults.standard.set(downloadURL, forKey: "profile_picture_url")
+                                        print(downloadURL)
+                                    case .failure(let error):
+                                        print("StorageManager error: \(error)")
+                                    }
+                                })
+                            }
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.spinner.dismiss(animated: true)
+                        }
+                        self.presenter.router.openConversations()
                     }
                 }
             }

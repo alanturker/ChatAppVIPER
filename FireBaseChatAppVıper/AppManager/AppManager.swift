@@ -13,10 +13,20 @@ final class AppManager: NSObject {
     static let shared: AppManager = AppManager()
     
     func openConversations(with vc: UIViewController) {
-        let conversationsVC = ConversationRouter.createModule()
-        let nav = UINavigationController(rootViewController: conversationsVC)
+        let chatVC = ConversationRouter.createModule()
+        let chatNav = UINavigationController(rootViewController: chatVC)
+        let profileVC = ProfileRouter.createModule()
+        let profileNav = UINavigationController(rootViewController: profileVC)
         
-        vc.present(nav, animated: true, completion: nil)
+        let subModules = (
+            conversations: chatNav,
+            profilePage: profileNav
+        )
+        
+        let tabBarController = ChatAppTabBarBuilder.build(with: subModules)
+        tabBarController.modalPresentationStyle = .fullScreen
+        
+        vc.present(tabBarController, animated: true, completion: nil)
     }
     
     func openLogIn(with vc: UIViewController) {

@@ -22,8 +22,10 @@ class RegisterRouter: RegisterPresenterToRouterConformable {
         viewController?.dismiss(animated: true, completion: nil)
     }
     
-    func openConversations(with vc: UIViewController){
-        AppManager.shared.openConversations(with: vc)
+    func openConversations() {
+        if let viewController = viewController {
+            AppManager.shared.openConversations(with: viewController)
+        }
     }
 }
 

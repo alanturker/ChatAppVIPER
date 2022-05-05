@@ -14,7 +14,6 @@ protocol LogInViewToPresenterConformable: AnyObject {
     
     func initialize()
     func goBack()
-    func openRegisterPage()
 
 }
 

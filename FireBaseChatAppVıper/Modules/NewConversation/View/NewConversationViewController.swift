@@ -14,6 +14,12 @@ class NewConversationViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
+    private var usersArray = [[String: String]]()
+    
+    private var resultsArray = [[String: String]]()
+    
+    private var hasFetched = false
+    
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search for Users.."
@@ -36,9 +42,12 @@ class NewConversationViewController: UIViewController {
         label.font = .systemFont(ofSize: 21, weight: .medium)
         return label
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubviews(noResultsLabel, tableView)
         searchBarConfigure()
+        tableViewConfigure()
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done,
@@ -47,8 +56,22 @@ class NewConversationViewController: UIViewController {
         searchBar.becomeFirstResponder()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+        noResultsLabel.frame = CGRect(x: (view.frame.width / 4),
+                                      y: (view.frame.height - 200) / 2,
+                                      width: view.frame.width,
+                                      height: 200)
+    }
+    
     private func searchBarConfigure() {
         searchBar.delegate = self
+    }
+    
+    private func tableViewConfigure() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     @objc private func dissmissSelf() {
@@ -58,6 +81,85 @@ class NewConversationViewController: UIViewController {
 // MARK: - SearchBar Delegate Methods
 extension NewConversationViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text, !text.replacingOccurrences(of: " ", with: "").isEmpty else {
+            return
+        }
+        
+        searchBar.resignFirstResponder()
+        resultsArray.removeAll()
+        spinner.show(in: view)
+        
+        self.searchUsers(query: text)
+    }
+    
+    func searchUsers(query: String) {
+        //check if array has firebase Result
+        if hasFetched {
+            filterUsers(with: query)
+        } else {
+            FireBaseDatabaseManager.shared.getAllUsers { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let usersCollection):
+                    self.hasFetched = true
+                    self.usersArray = usersCollection
+                    self.filterUsers(with: query)
+                case .failure(let error):
+                    print("Failed to get users \(error)")
+                }
+            }
+        }
+    }
+    
+    func filterUsers(with term: String) {
+        guard hasFetched else {
+            return
+        }
+    
+        let results: [[String: String]] = self.usersArray.filter({
+            guard let name = $0["name"]?.lowercased() else {
+                return false
+            }
+            
+            return name.hasPrefix(term.lowercased())
+        })
+        
+        DispatchQueue.main.async {
+            self.spinner.dismiss(animated: true)
+        }
+        
+        self.resultsArray = results
+        updateUI()
+    }
+    
+    func updateUI() {
+        if resultsArray.isEmpty {
+            self.noResultsLabel.isHidden = false
+            self.tableView.isHidden = true
+        } else {
+            self.noResultsLabel.isHidden = true
+            self.tableView.isHidden = false
+            self.tableView.reloadData()
+        }
+    }
+    
+}
+// MARK: - TableView Delegate & DataSource Methods
+extension NewConversationViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return resultsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewConversationCell", for: indexPath)
+        cell.textLabel?.text = resultsArray[indexPath.row]["name"]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        //TODO: start conversation
     }
 }
 // MARK: - Presenter To View Conformable

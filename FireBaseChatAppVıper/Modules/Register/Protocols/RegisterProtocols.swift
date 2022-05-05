@@ -34,5 +34,5 @@ protocol RegisterInteractorToPresenterConformable: AnyObject {
 
 protocol RegisterPresenterToRouterConformable: AnyObject {
     func goBack()
-    func openConversations(with vc: UIViewController)
+    func openConversations()
 }
