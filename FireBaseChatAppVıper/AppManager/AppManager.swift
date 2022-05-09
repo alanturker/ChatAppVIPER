@@ -12,6 +12,14 @@ final class AppManager: NSObject {
     
     static let shared: AppManager = AppManager()
     
+    static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .long
+        formatter.locale = .current
+        return formatter
+    }()
+    
     func openConversations(with vc: UIViewController) {
         let chatVC = ConversationRouter.createModule()
         let chatNav = UINavigationController(rootViewController: chatVC)
@@ -53,10 +61,22 @@ final class AppManager: NSObject {
     }
     
     func openChat(with vc: UIViewController) {
-        let chatVC = ChatRouter.createModule()
+        let chatVC = ChatRouter.createModule(email: nil)
         let nav = UINavigationController(rootViewController: chatVC)
         nav.modalPresentationStyle = .fullScreen
         
+        vc.present(nav, animated: true, completion: nil)
+    }
+    
+    func openNewChat(with vc: UIViewController, result: [String: String]) {
+        guard let name = result["name"], let email = result["email"] else {
+            return
+        }
+        let chatVC = ChatRouter.createModule(email: email)
+        chatVC.presenter.interactor.isNewConversation = true
+        let nav = UINavigationController(rootViewController: chatVC)
+        chatVC.title = name
+        nav.modalPresentationStyle = .fullScreen
         vc.present(nav, animated: true, completion: nil)
     }
     
@@ -64,7 +84,9 @@ final class AppManager: NSObject {
         let newConvVC = NewConversationRouter.createModule()
         let nav = UINavigationController(rootViewController: newConvVC)
         nav.modalPresentationStyle = .formSheet
-        
+        newConvVC.completion = { [weak self] result in
+            self?.openNewChat(with: vc, result: result)
+        }
         vc.present(nav, animated: true, completion: nil)
     }
 }

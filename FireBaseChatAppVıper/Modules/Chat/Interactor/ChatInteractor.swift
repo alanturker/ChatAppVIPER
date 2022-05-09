@@ -9,6 +9,12 @@ import Foundation
 
 class ChatInteractor: ChatPresenterToInteractorConformable {
     var presenter: ChatInteractorToPresenterConformable?
+    var otherUserEmail: String
+    var isNewConversation = false
+    
+    init(email: String? = nil) {
+        self.otherUserEmail = email ?? ""
+    }
     
     func initialize() {
         

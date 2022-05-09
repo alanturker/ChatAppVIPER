@@ -12,6 +12,8 @@ import JGProgressHUD
 class NewConversationViewController: UIViewController {
     var presenter: NewConversationViewToPresenterConformable!
     
+    public var completion: (([String: String]) -> (Void))?
+    
     private let spinner = JGProgressHUD(style: .dark)
     
     private var usersArray = [[String: String]]()
@@ -38,7 +40,7 @@ class NewConversationViewController: UIViewController {
         label.isHidden = true
         label.text = "No Results"
         label.textAlignment = .center
-        label.textColor = .green
+        label.textColor = .red
         label.font = .systemFont(ofSize: 21, weight: .medium)
         return label
     }()
@@ -59,7 +61,7 @@ class NewConversationViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
-        noResultsLabel.frame = CGRect(x: (view.frame.width / 4),
+        noResultsLabel.frame = CGRect(x: 0,
                                       y: (view.frame.height - 200) / 2,
                                       width: view.frame.width,
                                       height: 200)
@@ -80,6 +82,15 @@ class NewConversationViewController: UIViewController {
 }
 // MARK: - SearchBar Delegate Methods
 extension NewConversationViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            resultsArray.removeAll()
+            tableView.isHidden = true
+            noResultsLabel.isHidden = true
+        }
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.replacingOccurrences(of: " ", with: "").isEmpty else {
             return
@@ -160,6 +171,12 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         //TODO: start conversation
+        let targetUserData = resultsArray[indexPath.row]
+        
+        presenter.router.dissmisWithCompletion { [weak self] in
+            guard let self = self else { return }
+            self.completion?(targetUserData)
+        }
     }
 }
 // MARK: - Presenter To View Conformable

@@ -32,4 +32,5 @@ protocol NewConversationInteractorToPresenterConformable: AnyObject {
 
 protocol NewConversationPresenterToRouterConformable: AnyObject {
     func goBack()
+    func dissmisWithCompletion(completion: @escaping () -> Void)
 }

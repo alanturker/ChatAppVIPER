@@ -38,4 +38,5 @@ protocol ConversationPresenterToRouterConformable: AnyObject {
     func openLogIn()
     func openChat()
     func openNewConversation()
+    func createNewChat(result: [String: String])
 }

@@ -21,6 +21,10 @@ class NewConversationRouter: NewConversationPresenterToRouterConformable {
     func goBack() {
         viewController?.dismiss(animated: true, completion: nil)
     }
+    
+    func dissmisWithCompletion(completion: @escaping () -> Void) {
+        viewController?.dismiss(animated: true, completion: completion)
+    }
 }
 
 // MARK: Module Creation

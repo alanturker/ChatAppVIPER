@@ -36,6 +36,11 @@ class ConversationRouter: ConversationPresenterToRouterConformable {
         }
     }
     
+    func createNewChat(result: [String: String]) {
+        if let viewController = viewController {
+            AppManager.shared.openNewChat(with: viewController, result: result)
+        }
+    }
 }
 
 // MARK: Module Creation

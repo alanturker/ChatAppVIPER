@@ -8,30 +8,33 @@
 import Foundation
 import UIKit
 import MessageKit
+import InputBarAccessoryView
 
 class ChatViewController: MessagesViewController {
-    
     weak var presenter: ChatViewToPresenterConformable!
     
     private var messages = [Message]()
     
-    private var selfSender = Sender(senderId: "1",
-                                    displayName: "Ertürk",
-                                    photo: "")
+    private var selfSender: Sender? {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else { return nil}
+        return Sender(senderId: email,
+                      displayName: "Ertürk",
+                      photoURL: "")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        title = "Ertürk"
         view.backgroundColor = .red
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back",
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(didTapGoBack))
-        messages.append(Message(sender: selfSender,
-                                messageId: "1",
-                                sentDate: Date(),
-                                kind: .text("Hello how are you")))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        messageInputBar.inputTextView.becomeFirstResponder()
     }
     
     @objc private func didTapGoBack() {
@@ -42,12 +45,56 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        messageInputBar.delegate = self
     }
 }
-//MARK: - Messages CollectionView Delegate & DataSource Methods
+// MARK: - Input Bar AccessoryView Delegate Methods
+extension ChatViewController: InputBarAccessoryViewDelegate {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
+              let selfSender = self.selfSender,
+              let messageId = createMessageId() else {
+                  return
+              }
+        //Send message
+        if presenter.interactor.isNewConversation {
+            // create new conversation in database
+            let message = Message(sender: selfSender,
+                                  messageId: messageId,
+                                  sentDate: Date(),
+                                  kind: .text(text))
+            FireBaseDatabaseManager.shared.createNewConversation(otherUserEmail: presenter.interactor.otherUserEmail, firstMessage: message) { [weak self] success in
+                guard self != nil else { return }
+                if success {
+                    print("message sent successfully")
+                } else {
+                    print("failed to send message")
+                }
+            }
+        } else {
+            // append to existing data
+        }
+    }
+    
+    private func createMessageId() -> String? {
+        //date, otherUserEmail, senderEmail, random Int
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String else {
+            return nil
+        }
+        let safeEmail = FireBaseDatabaseManager.safeEmail(emailAddress: currentUserEmail)
+        let dateString = AppManager.dateFormatter.string(from: Date())
+        let newIdentifier = "\(presenter.interactor.otherUserEmail)_\(safeEmail)_\(dateString)"
+        return newIdentifier
+    }
+}
+// MARK: - Messages CollectionView Delegate & DataSource Methods
 extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
     func currentSender() -> SenderType {
-        return selfSender
+        if let sender = selfSender {
+            return sender
+        }
+        fatalError("SelfSender is nil, email should be cached.")
+        return Sender(senderId: "12", displayName: "", photoURL: "")
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
