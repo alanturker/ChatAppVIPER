@@ -15,7 +15,6 @@ protocol ConversationViewToPresenterConformable: AnyObject {
     func initialize()
     func goBack()
     func openLogInPage()
-    func openChatPage()
     func openNewConversationPage()
 }
 
@@ -36,7 +35,7 @@ protocol ConversationInteractorToPresenterConformable: AnyObject {
 
 protocol ConversationPresenterToRouterConformable: AnyObject {
     func openLogIn()
-    func openChat()
+    func openChat(model: Conversation)
     func openNewConversation()
     func createNewChat(result: [String: String])
 }

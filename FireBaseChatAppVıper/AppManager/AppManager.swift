@@ -60,8 +60,9 @@ final class AppManager: NSObject {
         vc.present(nav, animated: true, completion: nil)
     }
     
-    func openChat(with vc: UIViewController) {
-        let chatVC = ChatRouter.createModule(email: nil)
+    func openChat(with vc: UIViewController, model: Conversation) {
+        let chatVC = ChatRouter.createModule(email: model.otherUserEmail, conversationId: model.id)
+        chatVC.title = model.name
         let nav = UINavigationController(rootViewController: chatVC)
         nav.modalPresentationStyle = .fullScreen
         

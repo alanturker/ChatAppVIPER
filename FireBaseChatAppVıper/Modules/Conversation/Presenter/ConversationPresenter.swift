@@ -29,10 +29,6 @@ class ConversationPresenter: ConversationViewToPresenterConformable {
         router.openLogIn()
     }
     
-    func openChatPage() {
-        router.openChat()
-    }
-    
     func openNewConversationPage() {
         router.openNewConversation()
     }

@@ -24,9 +24,9 @@ class ConversationRouter: ConversationPresenterToRouterConformable {
         }
     }
     
-    func openChat() {
+    func openChat(model: Conversation) {
         if let viewController = viewController {
-            AppManager.shared.openChat(with: viewController)
+            AppManager.shared.openChat(with: viewController, model: model)
         }
     }
     

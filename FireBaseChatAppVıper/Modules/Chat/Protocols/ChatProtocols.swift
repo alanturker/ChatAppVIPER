@@ -24,6 +24,7 @@ protocol ChatPresenterToViewConformable: AnyObject {
 protocol ChatPresenterToInteractorConformable: AnyObject {
     var presenter: ChatInteractorToPresenterConformable? { get set }
     var otherUserEmail: String { get set }
+    var conversationId: String { get set }
     var isNewConversation: Bool { get set }
     
     func initialize()

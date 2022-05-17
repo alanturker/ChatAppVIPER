@@ -15,9 +15,11 @@ class ConversationsViewController: UIViewController {
     
     private var spinner = JGProgressHUD(style: .dark)
     
+    private var conversationsArray = [Conversation]()
+    
     private var tableView: UITableView = {
         var tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ConversationCell")
+        tableView.register(ConversationTableViewCell.self, forCellReuseIdentifier: ConversationTableViewCell.identifier)
         tableView.isHidden = true
         return tableView
     }()
@@ -38,9 +40,33 @@ class ConversationsViewController: UIViewController {
         configureUI()
         setupTableView()
         fetchConversations()
+        startListeningForConversations()
         title = "Conversations"
         
         view.backgroundColor = .green
+    }
+    
+    private func startListeningForConversations() {
+        guard let email = UserDefaults.standard.value(forKey: "email") as? String else {
+            return
+        }
+        
+        let safeEmail = FireBaseDatabaseManager.safeEmail(emailAddress: email)
+        FireBaseDatabaseManager.shared.getAllConversations(email: safeEmail) { [weak self] result in
+            switch result {
+            case .success(let conversations):
+                guard !conversations.isEmpty else {
+                    return 
+                }
+                self?.conversationsArray = conversations
+                
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            case .failure(let error):
+                print("Failed to get all conversation: \(error)")
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,20 +111,26 @@ extension ConversationsViewController {
 //MARK: - TableView Delegate & DataSource Methods
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return conversationsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ConversationCell", for: indexPath)
-        cell.textLabel?.text = "Hello World"
-        cell.accessoryType = .disclosureIndicator
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConversationTableViewCell.identifier, for: indexPath) as? ConversationTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.configureCell(with: conversationsArray[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let model = conversationsArray[indexPath.row]
         
-        presenter.router.openChat()
+        presenter.router.openChat(model: model)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
     
 }

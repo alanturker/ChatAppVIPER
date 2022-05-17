@@ -26,10 +26,10 @@ class ChatRouter: ChatPresenterToRouterConformable {
 // MARK: Module Creation
 extension ChatRouter {
     
-    static func createModule(email: String? = nil) -> ChatViewController {
+    static func createModule(email: String? = nil, conversationId: String? = nil) -> ChatViewController {
         
             let router = ChatRouter.shared
-            let interactor = ChatInteractor(email: email ?? "")
+            let interactor = ChatInteractor(email: email ?? "", conversationId: conversationId ?? "")
             let presenter = ChatPresenter(interactor: interactor, router: router)
             let view = ChatViewController.initializeFromStoryboard()
             
